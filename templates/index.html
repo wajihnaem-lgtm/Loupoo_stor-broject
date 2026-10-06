@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر لوبو للأدوات الطبية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="navbar__inner">
+            <a href="#top" class="navbar__logo">
+            <svg width="26" height="26" ViewBox="0 0 24 24 " fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C9 2 7 3.5 5.5 3.5C4 3.5 3 4.8 3 6.8C3 9 4 11 4.5 13.5C5 16 5.5 20.5 7.3 21.5C8.5 22.2 9 19.5 9.3 17.8C9.6 16.2 10.2 15 12 15C13.8 15 14.4 16.2 14.7 17.8C15 19.5 15.5 22.2 16.7 21.5C18.5 20.5 19 16 19.5 13.5C20 11 21 9 21 6.8C21 4.8 20 3.5 18.5 3.5C17 3.5 15 2 12 2Z" fill="#0d9488"/>
+            </svg>
+            LOUPOO
+            </a>
+            <nav class="navbar__links">
+                <a href="#shop">منتجاتنا</a>
+                <a href="#contact">تواصل معانا</a>
+                <a href="#about-us">نبذه عنا</a>
+            </nav>
+            <button class="cart-btn" id="cart-btn">
+                السلة
+                <span class="cart-btn__count" id="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero" id="top">
+        <p class="hero__eyebrow">أدوات طبية أصلية · جودة موثوقة</p>
+        <h1 class="hero__title">أدوات أسنان <em>تقدر تعتمد عليها.</em></h1>
+        <p class="hero__text">كل الأدوات اللي محتاجها عيادتك، في مكان واحد.</p>
+        <a href="#shop" class="hero__cta">تصفح المنتجات ↓</a>
+    </section>
+
+    <section class="section" id="shop">
+        <p class="section__eyebrow">المتجر</p>
+        <h2 class="section__title">منتجاتنا</h2>
+
+        <div class="shop-controls">
+            <input type="text" id="search-input" class="search-input" placeholder="دور على منتج...">
+            <div class="filters" id="filters">
+                <button class="filter-btn is-active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="فحص">فحص</button>
+                <button class="filter-btn" data-filter="جراحة">جراحة</button>
+                <button class="filter-btn" data-filter="تعقيم">تعقيم</button>
+                <button class="filter-btn" data-filter="معدات فحص">معدات فحص</button>
+            </div>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+        {% for product in products %}
+            <div class="product-card" data-category="{{ product.category }}" data-name="{{ product.name }}">
+                <div class="product-card">
+                     <div class="product-card">
+                         <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                     </div> 
+                </div>
+                <div class="product-card__body">
+                    <span class="product-card__category">{{ product.category }}</span>
+                    <h3 class="product-card__name">{{ product.name }}</h3>
+                    <p class="product-card__price">{{ product.price }} جنيه</p>
+                    <button class="add-to-cart-btn" data-name="{{ product.name }}" data-price="{{ product.price }}">أضف للسلة</button>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+        <p class="empty-state" id="empty-state">مفيش منتجات مطابقة للبحث.</p>
+    </section>
+
+    <footer class="footer" id="contact">
+        <p>لأي استفسار: تواصل معانا على واتساب</p>
+        <p>© 2026 لوبو للأدوات الطبية</p>
+    </footer>
+
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <aside class="cart-drawer" id="cart-drawer">
+        <div class="cart-drawer__header">
+            <h2>السلة</h2>
+            <button class="cart-drawer__close" id="cart-close">✕</button>
+        </div>
+        <div class="cart-drawer__items" id="cart-items"></div>
+        <p class="cart-drawer__empty" id="cart-empty">السلة فاضية.</p>
+        <div class="cart-drawer__footer">
+            <div class="cart-drawer__total">
+                <span>الإجمالي</span>
+                <span id="cart-total">0 جنيه</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">إتمام الطلب</button>
+        </div>
+    </aside>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
